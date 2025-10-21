@@ -121,7 +121,8 @@
     "deploy:alpha": "tsx ../../tools/deploy/package-deployer.ts api --tag alpha",
     "deploy:dry-run": "tsx ../../tools/deploy/package-deployer.ts api --dry-run",
     "build:dev": "node scripts/build.js --dev",
-    "generate:registry": "tsx scripts/generate-typed-registry.ts typed-registry.config.json"
+    "generate:registry": "tsx scripts/generate-typed-registry.ts typed-registry.config.json",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@ldesign/http": "workspace:*"
@@ -131,7 +132,7 @@
     "vue": "^3.3.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^3.0.0",
+    "@antfu/eslint-config": "^6.0.0",
     "@eslint-react/eslint-plugin": "^2.2.2",
     "@ldesign/builder": "workspace:*",
     "@playwright/test": "^1.40.1",
@@ -146,7 +147,7 @@
     "@vitest/coverage-v8": "^2.0.0",
     "@vitest/ui": "^2.0.0",
     "@vue/test-utils": "^2.4.4",
-    "eslint": "^9.0.0",
+    "eslint": "^9.18.0",
     "glob": "^10.3.10",
     "jsdom": "^24.0.0",
     "playwright": "^1.40.1",
@@ -155,7 +156,7 @@
     "rollup": "^4.9.6",
     "rollup-plugin-dts": "^6.1.0",
     "size-limit": "^11.0.0",
-    "typescript": "^5.6.0",
+    "typescript": "^5.7.3",
     "vite": "^5.0.12",
     "vitepress": "^1.0.0",
     "vitest": "^2.0.0",
