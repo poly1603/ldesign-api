@@ -1,0 +1,70 @@
+/**
+ * 统一错误码系统
+ * 提供标准化的错误代码、消息和处理建议
+ */
+/**
+ * 错误码枚举
+ */
+export declare enum ApiErrorCode {
+    NETWORK_ERROR = "ERR_NETWORK",
+    NETWORK_TIMEOUT = "ERR_NETWORK_TIMEOUT",
+    NETWORK_OFFLINE = "ERR_NETWORK_OFFLINE",
+    NETWORK_CONNECTION_REFUSED = "ERR_NETWORK_CONNECTION_REFUSED",
+    HTTP_BAD_REQUEST = "ERR_HTTP_400",
+    HTTP_UNAUTHORIZED = "ERR_HTTP_401",
+    HTTP_FORBIDDEN = "ERR_HTTP_403",
+    HTTP_NOT_FOUND = "ERR_HTTP_404",
+    HTTP_METHOD_NOT_ALLOWED = "ERR_HTTP_405",
+    HTTP_TIMEOUT = "ERR_HTTP_408",
+    HTTP_CONFLICT = "ERR_HTTP_409",
+    HTTP_RATE_LIMIT = "ERR_HTTP_429",
+    HTTP_SERVER_ERROR = "ERR_HTTP_500",
+    HTTP_BAD_GATEWAY = "ERR_HTTP_502",
+    HTTP_SERVICE_UNAVAILABLE = "ERR_HTTP_503",
+    HTTP_GATEWAY_TIMEOUT = "ERR_HTTP_504",
+    BUSINESS_ERROR = "ERR_BUSINESS",
+    VALIDATION_ERROR = "ERR_VALIDATION",
+    DATA_NOT_FOUND = "ERR_DATA_NOT_FOUND",
+    DUPLICATE_DATA = "ERR_DUPLICATE_DATA",
+    INVALID_PARAMS = "ERR_INVALID_PARAMS",
+    AUTH_TOKEN_EXPIRED = "ERR_TOKEN_EXPIRED",
+    AUTH_TOKEN_INVALID = "ERR_TOKEN_INVALID",
+    AUTH_REFRESH_FAILED = "ERR_AUTH_REFRESH_FAILED",
+    AUTH_NO_PERMISSION = "ERR_NO_PERMISSION",
+    CONFIG_INVALID = "ERR_CONFIG_INVALID",
+    METHOD_NOT_FOUND = "ERR_METHOD_NOT_FOUND",
+    PLUGIN_NOT_FOUND = "ERR_PLUGIN_NOT_FOUND",
+    CACHE_ERROR = "ERR_CACHE",
+    CACHE_WRITE_FAILED = "ERR_CACHE_WRITE_FAILED",
+    CACHE_READ_FAILED = "ERR_CACHE_READ_FAILED",
+    RATE_LIMIT_EXCEEDED = "ERR_RATE_LIMIT_EXCEEDED",
+    QUEUE_OVERFLOW = "ERR_QUEUE_OVERFLOW",
+    CIRCUIT_BREAKER_OPEN = "ERR_CIRCUIT_BREAKER_OPEN",
+    UNKNOWN_ERROR = "ERR_UNKNOWN",
+    REQUEST_CANCELLED = "ERR_REQUEST_CANCELLED",
+    RESPONSE_PARSE_ERROR = "ERR_RESPONSE_PARSE"
+}
+/**
+ * 错误信息映射
+ */
+export declare const ERROR_MESSAGES: Record<ApiErrorCode, string>;
+/**
+ * 错误处理建议
+ */
+export declare const ERROR_SUGGESTIONS: Record<ApiErrorCode, string[]>;
+/**
+ * 根据HTTP状态码获取错误码
+ */
+export declare function getErrorCodeByHttpStatus(status: number): ApiErrorCode;
+/**
+ * 判断错误是否可重试
+ */
+export declare function isRetryableError(code: ApiErrorCode): boolean;
+/**
+ * 判断错误是否需要重新登录
+ */
+export declare function isAuthError(code: ApiErrorCode): boolean;
+/**
+ * 获取错误的严重程度
+ */
+export declare function getErrorSeverity(code: ApiErrorCode): 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
