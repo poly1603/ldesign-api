@@ -13,6 +13,8 @@ import type {
   UserInfo,
 } from '../types'
 import { SYSTEM_API_METHODS } from '../types'
+import { SYSTEM_API_CONSTANTS } from '../constants'
+import { getGlobalAuthStorageHelper } from '../utils/StorageHelper'
 
 /**
  * 系统 API 方法配置
@@ -69,7 +71,7 @@ const systemApiMethods: Record<string, ApiMethodConfig> = {
           localStorage.setItem('refresh_token', result.refreshToken)
         }
       }
-      catch {}
+      catch { }
     },
     cache: {
       enabled: false, // 登录结果不缓存
@@ -97,7 +99,7 @@ const systemApiMethods: Record<string, ApiMethodConfig> = {
           localStorage.removeItem('user_info')
         }
       }
-      catch {}
+      catch { }
     },
     cache: {
       enabled: false,
@@ -143,7 +145,7 @@ const systemApiMethods: Record<string, ApiMethodConfig> = {
           localStorage.setItem('user_info', JSON.stringify(userInfo))
         }
       }
-      catch {}
+      catch { }
     },
     cache: {
       enabled: true,
@@ -294,7 +296,7 @@ const systemApiMethods: Record<string, ApiMethodConfig> = {
           localStorage.setItem('refresh_token', result.refreshToken)
         }
       }
-      catch {}
+      catch { }
     },
     cache: {
       enabled: false,
@@ -350,31 +352,43 @@ export const systemApiPlugin: ApiPlugin = {
   version: '1.0.0',
   apis: systemApiMethods,
 
+  /**
+   * 安装系统API插件
+   * 
+   * @param engine API引擎实例
+   */
   install: (engine) => {
     // 若检测到认证中间件已安装，则移除方法级 Authorization 头，避免与全局中间件重复
-    const authInstalled = Boolean((engine as unknown as { __auth_mw__?: unknown }).__auth_mw__)
-    if (authInstalled) {
-      const methodNames = [
+    const isAuthMiddlewareInstalled = Boolean((engine as unknown as { __auth_mw__?: unknown }).__auth_mw__)
+
+    if (isAuthMiddlewareInstalled) {
+      const authRequiredMethods = [
         SYSTEM_API_METHODS.GET_USER_INFO,
         SYSTEM_API_METHODS.UPDATE_USER_INFO,
         SYSTEM_API_METHODS.GET_MENUS,
         SYSTEM_API_METHODS.GET_PERMISSIONS,
         SYSTEM_API_METHODS.CHANGE_PASSWORD,
       ]
-      for (const name of methodNames) {
-        const cfg = engine.methods.get(name)
-        if (!cfg)
-          continue
-        const original = typeof cfg.config === 'function' ? cfg.config : () => cfg.config
-        const newCfg = (params?: unknown) => {
-          const rc = original(params)
+
+      for (const methodName of authRequiredMethods) {
+        const methodConfig = engine.methods.get(methodName)
+        if (!methodConfig) continue
+
+        const originalConfig = typeof methodConfig.config === 'function'
+          ? methodConfig.config
+          : () => methodConfig.config
+
+        const configWithoutAuth = (params?: unknown) => {
+          const requestConfig = originalConfig(params)
           // 创建浅拷贝并移除 Authorization 头
-          const headers = { ...(rc.headers || {}) }
-          if ('Authorization' in headers)
+          const headers = { ...(requestConfig.headers || {}) }
+          if ('Authorization' in headers) {
             delete (headers as Record<string, unknown>).Authorization
-          return { ...rc, headers }
+          }
+          return { ...requestConfig, headers }
         }
-        engine.register(name, { ...cfg, config: newCfg })
+
+        engine.register(methodName, { ...methodConfig, config: configWithoutAuth })
       }
     }
 

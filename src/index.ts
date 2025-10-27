@@ -160,13 +160,13 @@ export type {
 
 // 错误码系统
 export {
- ApiErrorCode,
- ERROR_MESSAGES,
- ERROR_SUGGESTIONS,
- getErrorCodeByHttpStatus,
- getErrorSeverity,
- isAuthError,
- isRetryableError,
+  ApiErrorCode,
+  ERROR_MESSAGES,
+  ERROR_SUGGESTIONS,
+  getErrorCodeByHttpStatus,
+  getErrorSeverity,
+  isAuthError,
+  isRetryableError,
 } from './utils/ErrorCodes'
 
 // 新增工具类 - 健康检查器
@@ -201,6 +201,96 @@ export type { IdGeneratorConfig, IdGeneratorStrategy } from './utils/IdGenerator
 // 工具类 - LRU缓存
 export { LRUCache } from './utils/LRUCache'
 export type { LRUCacheConfig, LRUCacheStats } from './utils/LRUCache'
+
+// 新增工具类 - 序列化优化器
+export {
+  createSerializationOptimizer,
+  fastSerialize,
+  generateParamFingerprint,
+  generateParamHash,
+  getSerializationStats,
+  resetSerializationStats,
+  SerializationOptimizer,
+} from './utils/SerializationOptimizer'
+
+// 新增工具类 - 内存保护
+export {
+  getGlobalMemoryGuard,
+  getMemoryInfo,
+  getMemoryStats,
+  hasCircularReference,
+  MemoryGuard,
+  setGlobalMemoryGuard,
+} from './utils/MemoryGuard'
+export type {
+  CircularReferenceResult,
+  MemoryGuardConfig,
+  MemoryInfo,
+  MemoryStats,
+} from './utils/MemoryGuard'
+
+// 新增工具类 - 分级对象池
+export {
+  createTieredObjectPool,
+  ObjectPoolFactory,
+  TieredObjectPool,
+} from './utils/TieredObjectPool'
+export type {
+  ObjectPoolConfig,
+  ObjectPoolStats,
+} from './utils/TieredObjectPool'
+
+// 常量配置
+export * from './constants'
+
+// Storage 辅助工具
+export {
+  AuthStorageHelper,
+  getGlobalAuthStorageHelper,
+  getGlobalStorageHelper,
+  resetGlobalStorageHelpers,
+  StorageHelper,
+} from './utils/StorageHelper'
+
+// 错误处理中间件
+export {
+  commonErrorMiddlewares,
+  createErrorHandlingChain,
+  createErrorHandlingMiddleware,
+  createErrorTransformMiddleware,
+  createNetworkFallbackMiddleware,
+  createRetryFilterMiddleware,
+} from './middlewares/errorHandling'
+export type {
+  ErrorHandlingConfig,
+} from './middlewares/errorHandling'
+
+// 高级性能监控
+export {
+  AdvancedPerformanceMonitor,
+  getGlobalAdvancedPerformanceMonitor,
+  setGlobalAdvancedPerformanceMonitor,
+} from './utils/AdvancedPerformanceMonitor'
+export type {
+  AdvancedPerformanceMonitorConfig,
+  HotspotInfo,
+  MethodPerformanceStats,
+  PerformanceRecord,
+  PerformanceTrend,
+} from './utils/AdvancedPerformanceMonitor'
+
+// 高级重试策略
+export {
+  AdvancedRetryStrategy,
+  createRetryStrategy,
+  executeWithRetry,
+  retryStrategies,
+} from './utils/AdvancedRetryStrategy'
+export type {
+  AdvancedRetryConfig,
+  BackoffStrategy,
+  RetryContext,
+} from './utils/AdvancedRetryStrategy'
 
 export { renameKeysDeep, renameKeysShallow } from './utils/object'
 export { createPerformanceMonitor, getGlobalPerformanceMonitor, PerformanceMonitor, setGlobalPerformanceMonitor } from './utils/PerformanceMonitor'

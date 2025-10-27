@@ -4,6 +4,7 @@
  */
 
 import type { CacheConfig, CacheItem, CacheStats } from '../types'
+import { CACHE_CONSTANTS, MEMORY_CONSTANTS } from '../constants'
 import { LRUCache } from './LRUCache'
 
 /**
@@ -52,7 +53,7 @@ class WebStorageCacheStorage implements CacheStorage {
   constructor(
     private storage: Storage,
     private prefix: string = 'ldesign_api_cache_',
-  ) {}
+  ) { }
 
   get(key: string): string | null {
     try {
@@ -127,17 +128,17 @@ export class CacheManager {
   constructor(config: CacheConfig) {
     this.config = {
       enabled: true,
-      ttl: 300000, // 5分钟
-      maxSize: 100,
+      ttl: CACHE_CONSTANTS.DEFAULT_TTL,
+      maxSize: CACHE_CONSTANTS.DEFAULT_MAX_SIZE,
       storage: 'memory',
       keyGenerator: (methodName: string, params?: unknown) =>
         `${methodName}:${JSON.stringify(params || {})}`,
-      prefix: 'ldesign_api_cache_',
+      prefix: CACHE_CONSTANTS.DEFAULT_PREFIX,
       ...config,
     }
 
     // 创建存储实例
-    const prefix = this.config?.prefix || 'ldesign_api_cache_'
+    const prefix = this.config?.prefix || CACHE_CONSTANTS.DEFAULT_PREFIX
     switch (this.config?.storage) {
       case 'localStorage':
         this.storage = new WebStorageCacheStorage(localStorage, prefix)
@@ -148,9 +149,9 @@ export class CacheManager {
       case 'lru':
         // 使用高性能LRU缓存
         this.lruCache = new LRUCache({
-          maxSize: this.config?.maxSize,
-          defaultTTL: this.config?.ttl,
-          enabled: this.config?.enabled,
+          maxSize: this.config?.maxSize || CACHE_CONSTANTS.DEFAULT_MAX_SIZE,
+          defaultTTL: this.config?.ttl || CACHE_CONSTANTS.DEFAULT_TTL,
+          enabled: this.config?.enabled ?? true,
         })
         this.storage = new MemoryCacheStorage() // 备用存储
         break
@@ -337,30 +338,30 @@ export class CacheManager {
    * 更新统计信息（优化版：增量更新，避免频繁全量计算）
    */
   private lastStatsUpdate = 0
-  private readonly statsUpdateInterval = 10000 // 10秒更新一次统计
-  
+  private readonly statsUpdateInterval = CACHE_CONSTANTS.STATS_UPDATE_INTERVAL
+
   private updateStats(): void {
     const now = Date.now()
-    
+
     // 节流统计更新，避免频繁计算
     if (now - this.lastStatsUpdate < this.statsUpdateInterval) {
       return
     }
-    
+
     this.lastStatsUpdate = now
     const keys = this.storage.keys()
     this.stats.totalItems = keys.length
 
     // 计算缓存大小（采样估算）
     let totalSize = 0
-    if (keys.length > 100) {
+    if (keys.length > CACHE_CONSTANTS.LARGE_CACHE_THRESHOLD) {
       // 大缓存时采样估算
-      const sampleSize = 20
+      const sampleSize = CACHE_CONSTANTS.SAMPLE_SIZE
       const step = Math.floor(keys.length / sampleSize)
       for (let i = 0; i < keys.length; i += step) {
         const itemStr = this.storage.get(keys[i])
         if (itemStr) {
-          totalSize += itemStr.length * 2 * step // 估算字符串大小（UTF-16）
+          totalSize += itemStr.length * MEMORY_CONSTANTS.UTF16_CHAR_SIZE * step
         }
       }
     } else {
@@ -368,7 +369,7 @@ export class CacheManager {
       keys.forEach((key) => {
         const itemStr = this.storage.get(key)
         if (itemStr) {
-          totalSize += itemStr.length * 2 // 估算字符串大小（UTF-16）
+          totalSize += itemStr.length * MEMORY_CONSTANTS.UTF16_CHAR_SIZE
         }
       })
     }
@@ -379,12 +380,12 @@ export class CacheManager {
    * 启动清理定时器
    */
   private startCleanupTimer(): void {
-    // 每5分钟清理一次过期缓存
+    // 定期清理过期缓存
     this.cleanupTimer = globalThis.setInterval(
       () => {
         this.cleanupExpiredItems()
       },
-      5 * 60 * 1000,
+      CACHE_CONSTANTS.CLEANUP_INTERVAL,
     )
   }
 
