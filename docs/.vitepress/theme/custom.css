@@ -1,0 +1,54 @@
+/**
+ * 自定义样式
+ */
+
+:root {
+  --vp-c-brand: #646cff;
+  --vp-c-brand-light: #747bff;
+  --vp-c-brand-lighter: #9499ff;
+  --vp-c-brand-dark: #535bf2;
+  --vp-c-brand-darker: #454ce1;
+}
+
+.dark {
+  --vp-c-brand: #747bff;
+  --vp-c-brand-light: #858dff;
+  --vp-c-brand-lighter: #a5b0ff;
+  --vp-c-brand-dark: #646cff;
+  --vp-c-brand-darker: #535bf2;
+}
+
+/* 代码块优化 */
+.vp-doc div[class*='language-'] {
+  margin: 16px 0;
+  border-radius: 8px;
+}
+
+/* 表格样式 */
+.vp-doc table {
+  display: block;
+  overflow-x: auto;
+  margin: 20px 0;
+}
+
+/* 提示框样式 */
+.vp-doc .tip,
+.vp-doc .warning,
+.vp-doc .danger {
+  margin: 16px 0;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+/* 链接样式 */
+.vp-doc a {
+  font-weight: 500;
+}
+
+/* 首页特效 */
+.VPHero .name {
+  background: linear-gradient(120deg, #646cff 30%, #535bf2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
