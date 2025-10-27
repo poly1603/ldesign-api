@@ -24,7 +24,7 @@ import type {
 import type { ErrorReporter } from '../utils/ErrorReporter'
 import type { PerformanceMonitor } from '../utils/PerformanceMonitor'
 
-import { createHttpClient } from '@ldesign/http'
+import { createHttpClientSync } from '@ldesign/http'
 import { ApiError, ApiErrorFactory } from '../utils/ApiError'
 import { CacheManager } from '../utils/CacheManager'
 import { DebounceManagerImpl } from '../utils/DebounceManager'
@@ -160,8 +160,8 @@ export class ApiEngineImpl implements ApiEngine {
       },
     }
 
-    // 创建 HTTP 客户端
-    this.httpClient = createHttpClient(this.config.http)
+    // 创建 HTTP 客户端（使用同步方法，需要预先加载适配器）
+    this.httpClient = createHttpClientSync(this.config.http)
 
     // 创建管理器
     this.cacheManager = new CacheManager(this.config.cache!)
