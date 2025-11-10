@@ -110,7 +110,6 @@
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "clean": "rimraf es lib dist coverage",
-    "prepublishOnly": "pnpm run clean && pnpm run build && pnpm run test:run",
     "size-check": "size-limit",
     "analyze:bundle": "node scripts/analyze-bundle.js",
     "bench:optimization": "vitest bench __tests__/benchmark/optimization.bench.ts",
