@@ -1,5 +1,144 @@
 # @ldesign/api
 
+统一的 API 管理包，支持多服务器、RESTful 和 LEAP 接口，完美集成 Vue 3。
+
+## 包结构
+
+```
+packages/api/
+├── packages/
+│   ├── core/          # @ldesign/api-core - 框架无关的核心功能
+│   └── vue/           # @ldesign/api-vue - Vue 3 集成
+├── package.json
+└── README.md
+```
+
+## 安装
+
+```bash
+# 安装 Vue 版本（推荐）
+pnpm add @ldesign/api-vue
+
+# 或只安装核心包（框架无关）
+pnpm add @ldesign/api-core
+```
+
+## 快速开始
+
+### 1. 定义服务器
+
+```typescript
+import { defineRestfulServer, defineLeapServer } from '@ldesign/api-vue'
+
+// RESTful 服务器
+const jsonApi = defineRestfulServer('jsonApi', 'https://jsonplaceholder.typicode.com')
+
+// LEAP 服务器（Java RPC 风格）
+const lpomServer = defineLeapServer('lpom', 'https://pm.longrise.cn', {
+  leap: {
+    systemPrefix: '/LPOM',
+    sysName: 'longriseOA',
+    sysArea: 42,
+    getSid: () => sessionStorage.getItem('LSID') || '',
+  }
+})
+```
+
+### 2. 定义 API
+
+```typescript
+import { defineRestfulApi, defineLeapApi } from '@ldesign/api-vue'
+
+// RESTful API
+const getUserApi = defineRestfulApi<{ id: number }, User>(
+  'jsonApi', 'getUser', 'GET', '/users/:id'
+).pathParams('id').build()
+
+// LEAP API
+const getWorkdayApi = defineLeapApi<{ month: string }, WorkdayData>(
+  'lpom', 'getMonthWorkday', 'loap_monthworkday'
+).build()
+```
+
+### 3. 在 Vue 应用中使用
+
+```typescript
+// main.ts
+import { createApp } from 'vue'
+import { createApiPlugin } from '@ldesign/api-vue'
+import { servers, apis } from '@/api'
+
+const app = createApp(App)
+
+app.use(createApiPlugin({
+  servers,
+  apis,
+  defaultServerId: 'jsonApi'
+}))
+```
+
+```vue
+<!-- Component.vue -->
+<script setup lang="ts">
+import { useApi } from '@ldesign/api-vue'
+import { getUserApi } from '@/api'
+
+const { data, loading, execute } = useApi(getUserApi)
+
+// 加载用户
+execute({ id: 1 }, { pathParams: { id: 1 } })
+</script>
+
+<template>
+  <div v-if="loading">加载中...</div>
+  <div v-else-if="data">{{ data.name }}</div>
+</template>
+```
+
+## 主要特性
+
+- 🔌 **多服务器支持** - 一个应用可连接多个后端服务器
+- 🎯 **多接口类型** - 同时支持 RESTful 和 LEAP RPC 风格接口
+- 📝 **声明式定义** - 使用 TypeScript 类型安全地定义 API
+- 🔄 **统一调用** - 无论接口类型，使用统一的方式调用
+- 🛠️ **代理生成** - 自动生成开发服务器代理配置
+- ⚡ **响应式** - Vue 3 Composition API 集成
+
+## 子包
+
+### @ldesign/api-core
+
+框架无关的核心功能，包括：
+
+- API 管理器
+- RESTful/LEAP 适配器
+- 服务器配置
+- 代理生成器
+
+### @ldesign/api-vue
+
+Vue 3 集成，包括：
+
+- `useApi` - 通用 API 组合函数
+- `useLeapApi` - LEAP API 组合函数
+- `useRestfulApi` - RESTful API 组合函数
+- `createApiPlugin` - Vue 插件
+
+## 文档
+
+详细文档请参考各子包的 README：
+
+- [@ldesign/api-core](./packages/core/README.md)
+- [@ldesign/api-vue](./packages/vue/README.md)
+
+## License
+
+MIT
+
+---
+
+# 以下为旧版 @ldesign/api
+
 🚀 **一个功能强大的通用系统接口管理包** - 支持插件化架构、内置系统接口、性能优化，完美集成 Vue 3
 
 [![npm version](https://img.shields.io/npm/v/@ldesign/api.svg)](https://www.npmjs.com/package/@ldesign/api)

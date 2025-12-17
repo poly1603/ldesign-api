@@ -1,0 +1,67 @@
+{
+  "name": "@ldesign/api-core",
+  "version": "0.1.0",
+  "description": "框架无关的 API 管理核心库，支持多服务器、RESTful 和 LEAP 接口",
+  "keywords": [
+    "ldesign",
+    "api",
+    "api-manager",
+    "restful",
+    "leap",
+    "rpc",
+    "typescript",
+    "multi-server"
+  ],
+  "author": "LDesign Team",
+  "license": "MIT",
+  "homepage": "https://github.com/ldesign/ldesign/tree/main/packages/api/packages/core#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ldesign/ldesign.git",
+    "directory": "packages/api/packages/core"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./es/index.d.ts",
+      "import": "./es/index.js",
+      "require": "./lib/index.cjs"
+    }
+  },
+  "main": "./lib/index.cjs",
+  "module": "./es/index.js",
+  "types": "./es/index.d.ts",
+  "files": [
+    "README.md",
+    "LICENSE",
+    "package.json",
+    "es",
+    "lib"
+  ],
+  "scripts": {
+    "build": "ldesign-builder build -f esm,cjs,dts",
+    "build:watch": "ldesign-builder build -f esm,cjs,dts --watch",
+    "dev": "ldesign-builder build -f esm,cjs,dts --watch",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint \"src/**/*.ts\" --fix",
+    "lint:check": "eslint \"src/**/*.ts\"",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "clean": "rimraf es lib dist"
+  },
+  "dependencies": {
+    "@ldesign/http-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@ldesign/builder": "workspace:*",
+    "@types/node": "^22.0.0",
+    "eslint": "^9.18.0",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.7.3",
+    "vitest": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,7 +1,11 @@
 {
   "name": "@ldesign/api",
   "version": "0.1.0",
-  "description": "一个功能强大的通用系统接口管理包，支持插件化架构、内置系统接口、性能优化，完美集成 Vue 3",
+  "description": "统一的 API 管理包，支持多服务器、RESTful 和 LEAP 接口，完美集成 Vue 3",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "keywords": [
     "ldesign",
     "vue3",
@@ -123,7 +127,8 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@ldesign/http": "workspace:*"
+    "@ldesign/api-core": "workspace:*",
+    "@ldesign/api-vue": "workspace:*"
   },
   "peerDependencies": {
     "react": "^18.0.0",

@@ -1,0 +1,71 @@
+{
+  "name": "@ldesign/api-vue",
+  "version": "0.1.0",
+  "description": "Vue 3 集成的 API 管理库，提供响应式组合函数和插件",
+  "keywords": [
+    "ldesign",
+    "vue3",
+    "api",
+    "composables",
+    "plugin",
+    "typescript"
+  ],
+  "author": "LDesign Team",
+  "license": "MIT",
+  "homepage": "https://github.com/ldesign/ldesign/tree/main/packages/api/packages/vue#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ldesign/ldesign.git",
+    "directory": "packages/api/packages/vue"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./es/index.d.ts",
+      "import": "./es/index.js",
+      "require": "./lib/index.cjs"
+    }
+  },
+  "main": "./lib/index.cjs",
+  "module": "./es/index.js",
+  "types": "./es/index.d.ts",
+  "files": [
+    "README.md",
+    "LICENSE",
+    "package.json",
+    "es",
+    "lib"
+  ],
+  "scripts": {
+    "build": "ldesign-builder build -f esm,cjs,dts",
+    "build:watch": "ldesign-builder build -f esm,cjs,dts --watch",
+    "dev": "ldesign-builder build -f esm,cjs,dts --watch",
+    "type-check": "vue-tsc --noEmit",
+    "lint": "eslint \"src/**/*.ts\" --fix",
+    "lint:check": "eslint \"src/**/*.ts\"",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "clean": "rimraf es lib dist"
+  },
+  "dependencies": {
+    "@ldesign/api-core": "workspace:*"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  },
+  "devDependencies": {
+    "@ldesign/builder": "workspace:*",
+    "@types/node": "^22.0.0",
+    "@vue/test-utils": "^2.4.4",
+    "eslint": "^9.18.0",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.7.3",
+    "vitest": "^2.0.0",
+    "vue": "^3.4.15",
+    "vue-tsc": "^3.0.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
