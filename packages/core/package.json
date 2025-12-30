@@ -26,16 +26,86 @@
     ".": {
       "types": "./es/index.d.ts",
       "import": "./es/index.js",
-      "require": "./lib/index.cjs"
-    }
+      "require": "./lib/index.cjs",
+      "default": "./es/index.js"
+    },
+    "./adapters": {
+      "types": "./es/adapters/index.d.ts",
+      "import": "./es/adapters/index.js",
+      "require": "./lib/adapters/index.cjs",
+      "default": "./es/adapters/index.js"
+    },
+    "./adapters/*": {
+      "types": "./es/adapters/*.d.ts",
+      "import": "./es/adapters/*.js",
+      "require": "./lib/adapters/*.cjs",
+      "default": "./es/adapters/*.js"
+    },
+    "./constants/*": {
+      "types": "./es/constants/*.d.ts",
+      "import": "./es/constants/*.js",
+      "require": "./lib/constants/*.cjs",
+      "default": "./es/constants/*.js"
+    },
+    "./manager": {
+      "types": "./es/manager/index.d.ts",
+      "import": "./es/manager/index.js",
+      "require": "./lib/manager/index.cjs",
+      "default": "./es/manager/index.js"
+    },
+    "./manager/*": {
+      "types": "./es/manager/*.d.ts",
+      "import": "./es/manager/*.js",
+      "require": "./lib/manager/*.cjs",
+      "default": "./es/manager/*.js"
+    },
+    "./proxy": {
+      "types": "./es/proxy/index.d.ts",
+      "import": "./es/proxy/index.js",
+      "require": "./lib/proxy/index.cjs",
+      "default": "./es/proxy/index.js"
+    },
+    "./proxy/*": {
+      "types": "./es/proxy/*.d.ts",
+      "import": "./es/proxy/*.js",
+      "require": "./lib/proxy/*.cjs",
+      "default": "./es/proxy/*.js"
+    },
+    "./registry": {
+      "types": "./es/registry/index.d.ts",
+      "import": "./es/registry/index.js",
+      "require": "./lib/registry/index.cjs",
+      "default": "./es/registry/index.js"
+    },
+    "./registry/*": {
+      "types": "./es/registry/*.d.ts",
+      "import": "./es/registry/*.js",
+      "require": "./lib/registry/*.cjs",
+      "default": "./es/registry/*.js"
+    },
+    "./types": {
+      "types": "./es/types/index.d.ts",
+      "import": "./es/types/index.js",
+      "require": "./lib/types/index.cjs",
+      "default": "./es/types/index.js"
+    },
+    "./types/*": {
+      "types": "./es/types/*.d.ts",
+      "import": "./es/types/*.js",
+      "require": "./lib/types/*.cjs",
+      "default": "./es/types/*.js"
+    },
+    "./package.json": "./package.json"
   },
   "main": "./lib/index.cjs",
   "module": "./es/index.js",
   "types": "./es/index.d.ts",
+  "unpkg": "./dist/index.js",
+  "jsdelivr": "./dist/index.js",
   "files": [
     "README.md",
     "LICENSE",
-    "package.json",
+    "CHANGELOG.md",
     "es",
     "lib"
   ],
@@ -63,5 +133,7 @@
   },
   "engines": {
     "node": ">=18.0.0"
-  }
+  },
+  "typings": "./es/index.d.ts",
+  "browser": "./dist/index.js"
 }

@@ -23,7 +23,7 @@ export * from '@ldesign/api-core'
 export {
   API_MANAGER_KEY,
   API_CONFIG_KEY,
-} from './lib/symbols'
+} from './constants/symbols'
 
 // ============================================================================
 // 组合函数

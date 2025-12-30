@@ -7,7 +7,7 @@
 import type { App, Plugin } from 'vue'
 import type { ApiManager, ApiManagerConfig, ServerConfig, UnifiedApiDefinition } from '@ldesign/api-core'
 import { createApiManager } from '@ldesign/api-core'
-import { API_CONFIG_KEY, API_MANAGER_KEY } from '../lib/symbols'
+import { API_CONFIG_KEY, API_MANAGER_KEY } from '../constants/symbols'
 
 /**
  * API 插件选项

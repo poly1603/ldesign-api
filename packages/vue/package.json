@@ -24,16 +24,50 @@
     ".": {
       "types": "./es/index.d.ts",
       "import": "./es/index.js",
-      "require": "./lib/index.cjs"
-    }
+      "require": "./lib/index.cjs",
+      "default": "./es/index.js"
+    },
+    "./composables": {
+      "types": "./es/composables/index.d.ts",
+      "import": "./es/composables/index.js",
+      "require": "./lib/composables/index.cjs",
+      "default": "./es/composables/index.js"
+    },
+    "./composables/*": {
+      "types": "./es/composables/*.d.ts",
+      "import": "./es/composables/*.js",
+      "require": "./lib/composables/*.cjs",
+      "default": "./es/composables/*.js"
+    },
+    "./constants/*": {
+      "types": "./es/constants/*.d.ts",
+      "import": "./es/constants/*.js",
+      "require": "./lib/constants/*.cjs",
+      "default": "./es/constants/*.js"
+    },
+    "./plugin": {
+      "types": "./es/plugin/index.d.ts",
+      "import": "./es/plugin/index.js",
+      "require": "./lib/plugin/index.cjs",
+      "default": "./es/plugin/index.js"
+    },
+    "./plugin/*": {
+      "types": "./es/plugin/*.d.ts",
+      "import": "./es/plugin/*.js",
+      "require": "./lib/plugin/*.cjs",
+      "default": "./es/plugin/*.js"
+    },
+    "./package.json": "./package.json"
   },
   "main": "./lib/index.cjs",
   "module": "./es/index.js",
   "types": "./es/index.d.ts",
+  "unpkg": "./dist/index.js",
+  "jsdelivr": "./dist/index.js",
   "files": [
     "README.md",
     "LICENSE",
-    "package.json",
+    "CHANGELOG.md",
     "es",
     "lib"
   ],
@@ -67,5 +101,7 @@
   },
   "engines": {
     "node": ">=18.0.0"
-  }
+  },
+  "typings": "./es/index.d.ts",
+  "browser": "./dist/index.js"
 }

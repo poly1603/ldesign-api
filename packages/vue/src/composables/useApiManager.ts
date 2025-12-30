@@ -7,7 +7,7 @@
 import { inject, provide } from 'vue'
 import type { ApiManager, ApiManagerConfig } from '@ldesign/api-core'
 import { createApiManager } from '@ldesign/api-core'
-import { API_CONFIG_KEY, API_MANAGER_KEY } from '../lib/symbols'
+import { API_CONFIG_KEY, API_MANAGER_KEY } from '../constants/symbols'
 
 /**
  * 提供 API 管理器
