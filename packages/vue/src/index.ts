@@ -43,6 +43,10 @@ export {
   // RESTful API
   useRestfulApi,
   createRestfulResource,
+  // Mutation
+  useMutation,
+  // 分页
+  usePaginatedApi,
 } from './composables'
 
 export type {
@@ -52,6 +56,13 @@ export type {
   UseLeapApiReturn,
   UseRestfulApiOptions,
   UseRestfulApiReturn,
+  MutationStatus,
+  UseMutationOptions,
+  UseMutationReturn,
+  PaginationParams,
+  PaginatedResponse,
+  UsePaginatedApiOptions,
+  UsePaginatedApiReturn,
 } from './composables'
 
 // ============================================================================

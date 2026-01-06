@@ -51,6 +51,80 @@ export {
 } from './types'
 
 // ============================================================================
+// 工具函数
+// ============================================================================
+
+export {
+  // 时间工具
+  debounce,
+  throttle,
+  // 对象工具
+  deepMerge,
+  deepClone,
+  pick,
+  omit,
+  isPlainObject,
+  // 哈希工具
+  hashString,
+  generateRequestKey,
+  serializeParams,
+  // 断言工具
+  invariant,
+  warning,
+  assertNever,
+  isDefined,
+  isNonNullable,
+} from './utils'
+
+export type {
+  DebounceOptions,
+  ThrottleOptions,
+  DebouncedFunction,
+  ThrottledFunction,
+  DeepPartial,
+  DeepReadonly,
+  RequestKeyOptions,
+} from './utils'
+
+// ============================================================================
+// 缓存
+// ============================================================================
+
+export {
+  LRUCache,
+  RequestCache,
+  RequestDeduplicator,
+} from './cache'
+
+export type {
+  LRUCacheOptions,
+  CacheEntry,
+  CacheStats,
+  RequestCacheOptions,
+  CachedResponse,
+  DeduplicatorOptions,
+  PendingRequest,
+} from './cache'
+
+// ============================================================================
+// 重试
+// ============================================================================
+
+export {
+  RetryStrategy,
+  createRetryStrategy,
+} from './retry'
+
+export type {
+  RetryOptions,
+  RetryContext,
+  RetryResult,
+  ShouldRetryFn,
+  OnRetryFn,
+  DelayFn,
+} from './retry'
+
+// ============================================================================
 // 管理器
 // ============================================================================
 

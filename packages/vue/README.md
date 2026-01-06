@@ -9,6 +9,8 @@ Vue 3 集成的 API 管理库，提供响应式组合函数和插件。
 - 📦 **类型安全** - 完整的 TypeScript 支持
 - 🔄 **自动取消** - 组件卸载时自动取消请求
 - 🎨 **灵活调用** - 支持命令式和声明式调用
+- 📝 **乐观更新** - 支持乐观更新和失败回滚
+- 📊 **分页支持** - 内置分页查询组合函数
 
 ## 安装
 
@@ -116,6 +118,8 @@ execute({ month: '2025-01' })
 - `useApi(api, options)` - 通用 API 调用
 - `useLeapApi(api, options)` - LEAP API 调用
 - `useRestfulApi(api, options)` - RESTful API 调用
+- `useMutation(api, options)` - 数据变更操作
+- `usePaginatedApi(api, options)` - 分页查询
 - `createLeapCaller(serverId)` - 创建 LEAP 调用器
 - `createRestfulResource(serverId, basePath)` - 创建 RESTful 资源
 
@@ -147,6 +151,79 @@ interface UseApiReturn {
 }
 ```
 
+## 高级组合函数
+
+### useMutation - 数据变更
+
+用于处理 POST/PUT/DELETE 等变更操作，支持乐观更新和失败回滚。
+
+```vue
+<script setup lang="ts">
+import { useMutation, defineRestfulApi } from '@ldesign/api-vue'
+
+const createUserApi = defineRestfulApi<CreateUserParams, User>(
+  'api', 'createUser', 'POST', '/users'
+).build()
+
+const { mutate, mutateAsync, isLoading, error } = useMutation(createUserApi, {
+  onSuccess: (user) => {
+    console.log('User created:', user)
+  },
+  onError: (error) => {
+    console.error('Failed:', error)
+  }
+})
+
+// 触发变更
+mutate({ name: 'John', email: 'john@example.com' })
+
+// 或使用 async/await
+const user = await mutateAsync({ name: 'John' })
+</script>
+```
+
+### usePaginatedApi - 分页查询
+
+用于处理分页数据查询。
+
+```vue
+<script setup lang="ts">
+import { usePaginatedApi, defineRestfulApi } from '@ldesign/api-vue'
+
+const getUsersApi = defineRestfulApi<QueryParams, UserListResponse>(
+  'api', 'getUsers', 'GET', '/users'
+).queryKeys('page', 'pageSize').build()
+
+const {
+  items,
+  loading,
+  page,
+  pageSize,
+  total,
+  totalPages,
+  hasNextPage,
+  nextPage,
+  prevPage,
+  goToPage,
+  setPageSize
+} = usePaginatedApi(getUsersApi, {
+  initialPageSize: 20,
+  immediate: true
+})
+</script>
+
+<template>
+  <div>
+    <div v-for="user in items" :key="user.id">{{ user.name }}</div>
+    
+    <div>第 {{ page }} / {{ totalPages }} 页，共 {{ total }} 条</div>
+    
+    <button @click="prevPage" :disabled="!hasPrevPage">上一页</button>
+    <button @click="nextPage" :disabled="!hasNextPage">下一页</button>
+  </div>
+</template>
+```
+
 ## License
 
-MIT
+MIT © LDesign Team

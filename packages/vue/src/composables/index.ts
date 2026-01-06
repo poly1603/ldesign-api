@@ -37,3 +37,24 @@ export type {
   UseRestfulApiOptions,
   UseRestfulApiReturn,
 } from './useRestfulApi'
+
+export {
+  useMutation,
+} from './useMutation'
+
+export type {
+  MutationStatus,
+  UseMutationOptions,
+  UseMutationReturn,
+} from './useMutation'
+
+export {
+  usePaginatedApi,
+} from './usePaginatedApi'
+
+export type {
+  PaginationParams,
+  PaginatedResponse,
+  UsePaginatedApiOptions,
+  UsePaginatedApiReturn,
+} from './usePaginatedApi'

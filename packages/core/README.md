@@ -4,10 +4,13 @@
 
 ## 特性
 
+- 🚀 **框架无关** - 纯 TypeScript 实现，可在任何前端框架中使用
 - 🔌 **多服务器支持** - 一个应用可连接多个后端服务器
 - 🎯 **多接口类型** - 同时支持 RESTful 和 LEAP RPC 风格接口
 - 📝 **声明式定义** - 使用 TypeScript 类型安全地定义 API
-- 🔄 **统一调用** - 无论接口类型，使用统一的方式调用
+- 🛡️ **类型安全** - 完整的 TypeScript 类型定义
+- 💾 **请求缓存** - 内置 LRU 缓存和请求去重
+- 🔄 **自动重试** - 支持指数退避的请求重试机制
 - 🛠️ **代理生成** - 自动生成开发服务器代理配置
 
 ## 安装
@@ -138,6 +141,77 @@ export default {
 - `generateViteProxyConfig(servers)` - 生成 Vite 代理配置
 - `generateLeapProxyConfig(servers)` - 生成 LEAP 专用代理配置
 
+## 缓存和重试
+
+### LRU 缓存
+
+```typescript
+import { LRUCache } from '@ldesign/api-core'
+
+const cache = new LRUCache<string>({
+  maxSize: 100,
+  defaultTTL: 5 * 60 * 1000, // 5 分钟
+})
+
+cache.set('key', 'value')
+const value = cache.get('key')
+cache.getStats() // { size, hits, misses, hitRate, ... }
+```
+
+### 请求去重
+
+```typescript
+import { RequestDeduplicator } from '@ldesign/api-core'
+
+const deduplicator = new RequestDeduplicator()
+
+// 相同的并发请求只会执行一次
+const result = await deduplicator.execute(
+  { method: 'GET', url: '/api/data' },
+  () => fetch('/api/data').then(r => r.json())
+)
+```
+
+### 重试策略
+
+```typescript
+import { createRetryStrategy } from '@ldesign/api-core'
+
+const retry = createRetryStrategy({
+  maxRetries: 3,
+  initialDelay: 1000,
+  backoffFactor: 2,
+  jitter: true
+})
+
+const result = await retry.execute(async () => {
+  const response = await fetch('/api/data')
+  if (!response.ok) throw new Error('Request failed')
+  return response.json()
+})
+```
+
+## 工具函数
+
+```typescript
+import { 
+  debounce,
+  throttle,
+  deepMerge,
+  deepClone,
+  pick,
+  omit 
+} from '@ldesign/api-core'
+
+// 防抖/节流
+const debouncedFn = debounce(fn, { wait: 300 })
+const throttledFn = throttle(fn, { wait: 100 })
+
+// 对象操作
+const merged = deepMerge({ a: 1 }, { b: 2 })
+const cloned = deepClone(original)
+```
+
 ## License
 
-MIT
+MIT © LDesign Team

@@ -1,17 +1,28 @@
 # @ldesign/api
 
-统一的 API 管理包，支持多服务器、RESTful 和 LEAP 接口，完美集成 Vue 3。
+🚀 **统一的 API 管理包** - 支持多服务器、RESTful 和 LEAP 接口，完美集成 Vue 3
+
+[![npm version](https://img.shields.io/npm/v/@ldesign/api.svg)](https://www.npmjs.com/package/@ldesign/api)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
+[![license](https://img.shields.io/npm/l/@ldesign/api.svg)](./LICENSE)
+
+## 特性
+
+- 🔌 **多服务器支持** - 一个应用可连接多个后端服务器
+- 🎯 **多接口类型** - 同时支持 RESTful 和 LEAP RPC 风格接口
+- 📝 **声明式定义** - 使用 TypeScript 类型安全地定义 API
+- 🛡️ **类型安全** - 完整的 TypeScript 类型定义
+- 💾 **请求缓存** - 内置 LRU 缓存和请求去重
+- 🔄 **自动重试** - 支持指数退避的请求重试机制
+- ⚡ **Vue 3 集成** - 响应式组合函数和插件支持
+- 🛠️ **代理生成** - 自动生成开发服务器代理配置
 
 ## 包结构
 
-```
-packages/api/
-├── packages/
-│   ├── core/          # @ldesign/api-core - 框架无关的核心功能
-│   └── vue/           # @ldesign/api-vue - Vue 3 集成
-├── package.json
-└── README.md
-```
+| 包 | 描述 |
+|---|---|
+| `@ldesign/api-core` | 框架无关的核心库，包含 API 管理、缓存、重试等 |
+| `@ldesign/api-vue` | Vue 3 集成，提供响应式组合函数和插件 |
 
 ## 安装
 
@@ -104,25 +115,25 @@ execute({ id: 1 }, { pathParams: { id: 1 } })
 - 🛠️ **代理生成** - 自动生成开发服务器代理配置
 - ⚡ **响应式** - Vue 3 Composition API 集成
 
-## 子包
+## Vue 3 组合函数
 
-### @ldesign/api-core
+| 组合函数 | 描述 |
+|---|---|
+| `useApi` | 通用 API 调用 |
+| `useLeapApi` | LEAP RPC 接口调用 |
+| `useRestfulApi` | RESTful 接口调用 |
+| `useMutation` | 数据变更操作（乐观更新、失败回滚） |
+| `usePaginatedApi` | 分页查询 |
 
-框架无关的核心功能，包括：
+## 核心功能
 
-- API 管理器
-- RESTful/LEAP 适配器
-- 服务器配置
-- 代理生成器
-
-### @ldesign/api-vue
-
-Vue 3 集成，包括：
-
-- `useApi` - 通用 API 组合函数
-- `useLeapApi` - LEAP API 组合函数
-- `useRestfulApi` - RESTful API 组合函数
-- `createApiPlugin` - Vue 插件
+| 功能 | 描述 |
+|---|---|
+| `LRUCache` | LRU 缓存实现 |
+| `RequestCache` | 请求结果缓存 |
+| `RequestDeduplicator` | 请求去重 |
+| `RetryStrategy` | 指数退避重试 |
+| `debounce`/`throttle` | 防抖/节流 |
 
 ## 文档
 
@@ -133,7 +144,7 @@ Vue 3 集成，包括：
 
 ## License
 
-MIT
+MIT © LDesign Team
 
 ---
 

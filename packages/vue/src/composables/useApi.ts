@@ -156,7 +156,7 @@ export function useApi<TResponse = unknown, TParams = unknown>(
         }
       }
 
-      const result = await manager.call<TResponse>(apiOrId, apiOptions)
+      const result = await manager.call<TResponse>(apiOrId as string | UnifiedApiDefinition, apiOptions)
 
       data.value = result.data
       response.value = result
